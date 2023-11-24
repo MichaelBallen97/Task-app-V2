@@ -10,8 +10,8 @@ import { Toaster } from 'sonner'
 function App() {
 
   return (
-    <TaksContext>
-      <CategoryContext>
+    <CategoryContext>
+      <TaksContext>
         <main className=' w-full max-w-md shadow-md shadow-blue-950 mx-auto flex flex-col gap-8 relative overflow-hidden h-screen'>
           <Toaster />
           <Header />
@@ -19,8 +19,8 @@ function App() {
           <TaskList />
           <Footer />
         </main>
-      </CategoryContext>
-    </TaksContext>
+      </TaksContext>
+    </CategoryContext>
   )
 }
 

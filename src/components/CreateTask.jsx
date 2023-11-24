@@ -35,7 +35,7 @@ function CreateTask({open, setOpen}) {
         <fieldset className="flex flex-col gap-2 text-left">
           <label htmlFor="task-category"> Category </label>
           <select name="task-category" id="task-category" className="bg-gray-700 rounded-lg px-1 py-2" required>
-            {categories.map(category => <option value={category.id}>{ category.title }</option> )}
+            {categories.map(category => <option key={category.id} value={category.id}>{ category.title }</option> )}
           </select>
         </fieldset>
 

@@ -1,21 +1,25 @@
 import { useReducer } from "react"
 import { v4 } from "uuid";
 import { toast } from 'sonner'
+import { useContext } from "react";
+import { CategoryGlobalContext } from "../context/CategoryContext";
 
 function useTasks () {
   const initialTasks = window.localStorage.getItem("tasks") ? JSON.parse(window.localStorage.getItem("tasks")) : []
+  const {selectedCategory, setSelectedCategory} = useContext(CategoryGlobalContext)
   
   const taskReducer = (state, action) => {
     if(action.type === 'ADD_TASK') {
-      const newTasks = [...state, action.payload]
+      const newTasks = [...initialTasks, action.payload]
       window.localStorage.setItem("tasks", JSON.stringify(newTasks))
-      return newTasks
+      
+      return newTasks.filter(task => task.category.includes(selectedCategory))
     } 
 
     if(action.type === 'DELETE_TASK') {
-      const newTasks = state.filter(task => task.id != action.payload)
+      const newTasks = [...initialTasks].filter(task => task.id != action.payload)
       window.localStorage.setItem("tasks", JSON.stringify(newTasks))
-      return newTasks
+      return newTasks.filter(task => task.category.includes(selectedCategory))
     } 
 
     if(action.type === 'EDIT_TASK') {
@@ -26,7 +30,7 @@ function useTasks () {
         return task
       })
       window.localStorage.setItem("tasks", JSON.stringify(newTasks))
-      return newTasks
+      return newTasks.filter(task => task.category.includes(selectedCategory))
     }
 
     if(action.type === 'COMPLETE_TASK') {
@@ -46,10 +50,8 @@ function useTasks () {
         return task
       })
 
-      console.log(newTasks)
-
       window.localStorage.setItem("tasks", JSON.stringify(newTasks))
-      return newStateTasks
+      return newTasks.filter(task => task.category.includes(selectedCategory))
     }
 
     if(action.type === 'FILTER_TASKS_CATEGORY') {
